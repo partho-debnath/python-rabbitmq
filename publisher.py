@@ -17,9 +17,11 @@ try:
             heartbeat=60,
         ),
     )
-    print("-----")
     channel = connection.channel()
-    print(channel is None)
-    print("channel", channel)
+    queue_name = "hello_queue"
+    channel.queue_declare(queue=queue_name)
+    channel.basic_publish(exchange="", routing_key=queue_name, body="Hello World-2!")
+    channel.close()
+    print(" [x] Sent 'Hello World!'")
 except Exception as e:
     print("Error", e)
